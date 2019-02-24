@@ -21,6 +21,7 @@ COPY . /var/www/
 COPY public/ /var/www/html/
 COPY lib/docker.php /var/www/lib/secret.php
 RUN mkdir -m 1777 /var/www/logs
+RUN chown 1777 /archive
 
 # used by public/.htaccess
 RUN a2enmod rewrite
