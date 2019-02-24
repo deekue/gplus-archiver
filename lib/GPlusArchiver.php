@@ -16,12 +16,16 @@ class GPlusArchiver
         $client = new Google_Client();
         $client->setApplicationName('gplus-archiver');
 
-        # These are for OAUTH
-        #$client->setClientId(GAPI_CLIENT_ID);
-        #$client->setClientSecret(GAPI_CLIENT_SECRET);
-
-        # This is for API key
-        $client->setDeveloperKey(GAPI_API_KEY);
+        if(defined('GAPI_CLIENT_ID') && defined('GAPI_CLIENT_SECRET')) {
+          # These are for OAUTH
+	  $client->setClientId(GAPI_CLIENT_ID);
+	  $client->setClientSecret(GAPI_CLIENT_SECRET);
+	} elseif(defined('GAPI_API_KEY')) {
+	  # This is for API key
+	  $client->setDeveloperKey(GAPI_API_KEY);
+	//} else {
+	// fail fast?
+	}
 
         $referer = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
         $client->setRedirectUri($referer);
